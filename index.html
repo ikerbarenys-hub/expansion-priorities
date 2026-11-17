@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Where Fuze Goes Next</title>
+<meta name="description" content="An independent, public data view on which corridor Fuze could prioritise next. Prepared by Iker Barenys.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#121317; --surface:#1B1E24; --surface-2:#17181D; --border:#23252A;
+  --text:#FFFFFF; --muted:#D9D9D9; --subtle:#81899E;
+  --accent:#163CFF; --accent-text:#7188FE; --accent-soft:rgba(22,60,255,.15); --accent-border:rgba(22,60,255,.4); --on-accent:#FFFFFF;
+  --positive:#00FF80; --s1:#7188FE; --s2:#00FF80; --s3:#D478FC; --s4:#FF4F47;
+  --sans:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --r-panel:22px; --r-card:16px; --r-btn:12px; --r-chip:6px;
+  --gutter:16px; --maxw:1120px; --textw:720px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.55 var(--sans);overflow-x:hidden}
+a{color:var(--accent-text);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+.label{font:500 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--subtle)}
+.pill{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:7px 12px}
+h1,h2,h3{margin:0;font-weight:700}
+h1{font-size:34px;line-height:1.15;letter-spacing:-.02em}
+h2{font-size:26px;line-height:1.2;letter-spacing:-.01em}
+h3{font-size:18px;line-height:1.4}
+.acc{color:var(--accent-text)}
+p{margin:0 0 12px}
+.lede{font-size:18px;color:var(--muted);max-width:var(--textw)}
+.muted{color:var(--muted)} .subtle{color:var(--subtle)}
+.nw{white-space:nowrap}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(18,19,23,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:52px}
+.topbar .who{font-weight:600;font-size:14px}
+.topbar nav{display:none;gap:18px}
+.topbar nav a{color:var(--muted);text-decoration:none;font-size:14px}
+.topbar nav a:hover{color:var(--text)}
+
+/* sections */
+section{padding:48px 0;border-bottom:1px solid var(--border)}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-panel);padding:24px 18px}
+.sec-head{margin-bottom:24px;max-width:var(--textw)}
+.sec-head .pill{margin-bottom:14px}
+.sec-head h2{margin-bottom:10px}
+
+/* hero */
+.hero{padding:40px 0 48px}
+.hero h1{margin:16px 0 18px}
+.answer{background:var(--surface);border:1px solid var(--accent-border);border-radius:var(--r-card);padding:18px;margin:22px 0 18px;max-width:var(--textw)}
+.answer ol{margin:10px 0 0;padding:0;list-style:none;counter-reset:a}
+.answer li{counter-increment:a;display:grid;grid-template-columns:34px 1fr;gap:6px;padding:8px 0;border-top:1px solid var(--border)}
+.answer li:first-child{border-top:0}
+.answer li::before{content:counter(a,decimal-leading-zero) "/";font:500 13px/1.6 var(--mono);color:var(--accent-text)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--subtle)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--on-accent);border:0;border-radius:var(--r-btn);padding:13px 20px;font:600 15px/1 var(--sans);text-decoration:none;cursor:pointer;box-shadow:0 1px 1px rgba(8,8,8,.08),0 1px 1px rgba(8,8,8,.2),inset 0 6px 12px rgba(255,255,255,.12),inset 0 1px 1px rgba(255,255,255,.2)}
+.btn.ghost{background:transparent;border:1px solid var(--border);box-shadow:none;color:var(--muted)}
+.btn.small{padding:9px 12px;font-size:13px;border-radius:10px}
+.btn[aria-pressed="true"]{border-color:var(--accent-text);color:var(--text);background:var(--accent-soft)}
+
+/* timeline */
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:86px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--border)}
+.tl li:first-child{border-top:0}
+.tl .when{font:500 12px/1.5 var(--mono);color:var(--subtle);padding-top:2px}
+.tl .what{font-size:15px}
+.track{display:inline-flex;align-items:center;gap:6px;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tracks{display:grid;gap:10px;margin-top:22px}
+.trackcard{border:1px solid var(--border);border-radius:var(--r-card);padding:14px 16px;background:var(--surface-2)}
+.trackcard b{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.takeaway{margin-top:18px;padding-left:14px;border-left:3px solid var(--accent);color:var(--muted);max-width:var(--textw)}
+
+/* framework */
+.crit{display:grid;gap:10px;list-style:none;margin:0;padding:0}
+.crit li{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:start;border:1px solid var(--border);border-radius:var(--r-card);padding:14px;background:var(--surface-2)}
+.crit .n{font:500 13px/1.6 var(--mono);color:var(--accent-text)}
+.crit .w{font:500 13px/1.6 var(--mono);color:var(--muted);white-space:nowrap}
+.crit p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+
+/* ranking */
+.rankgrid{display:grid;gap:18px}
+.weights{display:grid;gap:14px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.wrow label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px}
+.wrow output{font:500 13px var(--mono);color:var(--accent-text)}
+input[type=range]{width:100%;accent-color:var(--accent);height:28px;margin:0}
+.ranklist{list-style:none;margin:0;padding:0;position:relative}
+.ranklist>li{border:1px solid var(--border);border-radius:var(--r-card);background:var(--surface-2);margin-bottom:8px;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.ranklist>li.top{border-color:var(--accent-border)}
+.rowbtn{all:unset;box-sizing:border-box;display:grid;grid-template-columns:30px 1fr 52px;gap:10px;align-items:center;width:100%;padding:12px 14px;cursor:pointer}
+.rowbtn .rk{font:500 13px var(--mono);color:var(--subtle)}
+.ranklist>li.top .rk{color:var(--accent-text)}
+.rowbtn .nm{font-weight:600;font-size:15px;line-height:1.3}
+.rowbtn .tr{display:block;font:500 11px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--subtle)}
+.bar{display:block;height:6px;background:var(--border);border-radius:3px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent-text);border-radius:3px;transition:width .35s}
+.rowbtn .sc{font:600 16px var(--mono);text-align:right}
+.detail{padding:0 14px 14px;display:none}
+li.open .detail{display:block}
+.detail table{width:100%;border-collapse:collapse;font-size:13.5px}
+.detail th{text-align:left;font:500 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);padding:6px 0;border-bottom:1px solid var(--border)}
+.detail td{padding:8px 0;border-bottom:1px solid var(--border);vertical-align:top}
+.detail td:first-child{width:96px;color:var(--muted);padding-right:8px}
+.dots{display:inline-flex;gap:3px;margin-bottom:4px}
+.dots i{width:8px;height:8px;border-radius:2px;background:var(--border)}
+.dots i.on{background:var(--accent-text)}
+.est{font:500 11px/1 var(--mono);color:var(--s3);border:1px solid currentColor;border-radius:4px;padding:2px 4px;margin-left:6px;vertical-align:1px}
+.srcs{display:block;margin-top:3px;font-size:12px}
+.note{font-size:13px;color:var(--subtle);margin-top:10px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* economics */
+.econ{display:grid;gap:18px}
+.field{display:grid;gap:6px;margin-bottom:14px}
+.field label{font-size:14px;display:flex;justify-content:space-between}
+.field output{font:500 13px var(--mono);color:var(--accent-text)}
+select,input[type=number]{background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font:500 15px var(--sans);width:100%}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:14px}
+.stat{border:1px solid var(--border);border-radius:var(--r-card);padding:12px 14px;background:var(--surface-2);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.stat .v{font:700 19px/1.2 var(--sans);text-align:right}
+details.fine summary{cursor:pointer;font-size:14px;color:var(--muted);padding:6px 0;list-style-position:inside}
+details.fine[open] summary{margin-bottom:10px}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{font:500 11px var(--mono);fill:var(--subtle)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);margin-top:6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.flag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--s3);border:1px solid var(--s3);border-radius:999px;padding:6px 10px;margin-bottom:12px}
+
+/* recommendation */
+.recs{display:grid;gap:12px;counter-reset:r}
+.rec{border:1px solid var(--border);border-radius:var(--r-card);background:var(--surface-2);padding:18px}
+.rec .step{font:500 12px var(--mono);color:var(--accent-text);letter-spacing:.06em;text-transform:uppercase}
+.rec h3{margin:6px 0 10px;font-size:20px}
+.rec dl{margin:0;display:grid;gap:10px}
+.rec dt{font:500 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--subtle)}
+.rec dd{margin:2px 0 0;font-size:15px;color:var(--muted)}
+.why-order{margin-top:16px;color:var(--muted);max-width:var(--textw)}
+
+/* questions */
+.qs{list-style:none;margin:0;padding:0;counter-reset:q}
+.qs li{counter-increment:q;display:grid;grid-template-columns:40px 1fr;gap:8px;padding:14px 0;border-top:1px solid var(--border)}
+.qs li:first-child{border-top:0}
+.qs li::before{content:counter(q,decimal-leading-zero) "/";font:500 13px/1.7 var(--mono);color:var(--accent-text)}
+.qs b{display:block}
+.qs span{color:var(--muted);font-size:15px}
+
+/* why me */
+.fit{width:100%;border-collapse:collapse}
+.fit th{text-align:left;font:500 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);padding:8px 0;border-bottom:1px solid var(--border)}
+.fit td{padding:12px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:15px}
+.fit td:first-child{font-weight:600;padding-right:14px;width:38%}
+.fit td:last-child{color:var(--muted)}
+
+/* sources */
+details.src{border:1px solid var(--border);border-radius:var(--r-card);padding:0 16px;background:var(--surface-2);margin-bottom:10px}
+details.src summary{cursor:pointer;padding:14px 0;font-weight:600}
+.srclist{list-style:none;margin:0 0 14px;padding:0;font-size:13.5px}
+.srclist li{padding:7px 0;border-top:1px solid var(--border);word-break:break-word}
+.srclist .d{color:var(--subtle);font-family:var(--mono);font-size:12px}
+.method p,.method li{font-size:14.5px;color:var(--muted)}
+
+footer{padding:32px 0 48px;font-size:14px;color:var(--subtle)}
+footer .wrap{display:grid;gap:6px}
+
+@media (min-width:760px){
+  :root{--gutter:28px}
+  body{font-size:17px}
+  h1{font-size:52px} h2{font-size:34px} h3{font-size:20px}
+  section{padding:88px 0}
+  .hero{padding:72px 0 80px}
+  .panel{padding:40px}
+  .topbar nav{display:flex}
+  .tracks{grid-template-columns:repeat(3,1fr)}
+  .crit{grid-template-columns:1fr 1fr}
+  .rankgrid{grid-template-columns:300px 1fr;gap:32px;align-items:start}
+  .weights{position:sticky;top:76px}
+  .econ{grid-template-columns:340px 1fr;gap:32px;align-items:start}
+  .recs{grid-template-columns:repeat(3,1fr)}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .stat{display:block}
+  .stat .v{text-align:left;margin-top:4px}
+}
+@media (min-width:1100px){ h1{font-size:56px} }
+
+@media print{
+  :root{--bg:#fff;--surface:#F7F9FF;--surface-2:#fff;--border:#D9DEEE;--text:#121317;--muted:#3B3F4A;--subtle:#5A6275;--accent-text:#163CFF;--s1:#163CFF;--s2:#087A41;--s3:#A03FD0;--s4:#C0392B;color-scheme:light}
+  body{font-size:12pt}
+  .topbar,.presets,.weights,.no-print{display:none!important}
+  section{padding:18px 0;break-inside:auto}
+  .panel{padding:16px}
+  .rankgrid,.econ{grid-template-columns:1fr}
+  .ranklist,#econForm .btn{display:none!important}
+  .print-only{display:block!important}
+  .pm{width:100%;border-collapse:collapse;font-size:9.5pt}
+  .pm th,.pm td{padding:5px 4px;border-bottom:1px solid var(--border);text-align:center}
+  .pm th:nth-child(2),.pm td:nth-child(2){text-align:left}
+  .pm th{font:500 8pt var(--mono);text-transform:uppercase;color:var(--subtle)}
+  .pm tr.top td{font-weight:700}
+  .rec,.qs li,.fit tr,.pm,.tl li,.trackcard,.stats,.chart{break-inside:avoid}
+  #sources .sec-head{margin-bottom:8px}
+  details.src summary{padding:6px 0}
+  .method li{font-size:9.5pt}
+  .recs{grid-template-columns:1fr 1fr 1fr}
+  .rec{padding:12px} .rec h3{font-size:13pt} .rec dd{font-size:10pt}
+  h1{font-size:28pt} h2{font-size:18pt}
+  .hero{padding:10px 0 18px}
+  a{color:var(--text)}
+  #recommendation{break-before:page}
+  .econ{grid-template-columns:240px 1fr;gap:18px}
+  .field{margin-bottom:8px}
+  .srclist{columns:2;column-gap:18px}
+  .srclist li{padding:3px 0;font-size:7.5pt;break-inside:avoid}
+  .srclist .d{font-size:7pt}
+  .crit li{padding:8px 12px}
+  .crit{grid-template-columns:1fr 1fr}
+  .tracks{grid-template-columns:repeat(3,1fr)}
+}
+.print-only{display:none}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <span class="who">Prepared by Iker Barenys</span>
+    <nav aria-label="Sections">
+      <a href="#today">Today</a><a href="#ranking">Ranking</a><a href="#economics">Economics</a><a href="#recommendation">Recommendation</a><a href="#sources">Sources</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- 1. HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="pill">Expansion priorities · public data view</span>
+    <h1>Where should Fuze <span class="acc">go next?</span></h1>
+    <p class="lede">The data points to three moves, in this order. The order follows what Fuze already holds, from most to least.</p>
+    <div class="answer" aria-label="Short answer">
+      <span class="label">The short answer</span>
+      <ol>
+        <li><span><b>Europe institutional to Gulf.</b> <span class="muted">Regulated status at both ends today.</span></span></li>
+        <li><span><b>Gulf to Pakistan, UAE leg first.</b> <span class="muted">The largest flow in the MENA set, with a new licence regime.</span></span></li>
+        <li><span><b>US to Latin America, Mexico first.</b> <span class="muted">The biggest prize, and the most new building.</span></span></li>
+      </ol>
+    </div>
+    <div class="meta"><span>Iker Barenys</span><span>November 2026</span><span>Based on public information only</span><span>About 5 minutes</span></div>
+  </div>
+</section>
+
+<!-- 2. TODAY -->
+<section id="today">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">01 · Where Fuze is today</span>
+      <h2>Three tracks, one open question: <span class="acc">sequencing</span></h2>
+    </div>
+    <div class="panel">
+      <ol class="tl" id="timeline"></ol>
+      <div class="tracks" id="tracks"></div>
+      <p class="takeaway">Three tracks are open. The question is which to deepen first.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. FRAMEWORK -->
+<section id="framework">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">02 · The framework</span>
+      <h2>Six criteria, scored 1 to 5</h2>
+      <p class="muted">Higher is better. Regulation weighs most: without a licence route, size does not matter.</p>
+    </div>
+    <ul class="crit" id="criteria"></ul>
+  </div>
+</section>
+
+<!-- 4. RANKING -->
+<section id="ranking">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">03 · Interactive ranking</span>
+      <h2>Nine options. <span class="acc">Change the weights</span> and see what holds.</h2>
+      <p class="muted">Tap any row for the score behind each criterion and its source. Scores marked <span class="est">EST</span> are my estimate.</p>
+    </div>
+    <div class="rankgrid">
+      <div class="weights panel" role="group" aria-labelledby="wtitle">
+        <span class="label" id="wtitle">Weights</span>
+        <div class="presets" id="presets"></div>
+        <details class="fine" id="fine"><summary>Fine tune each weight</summary>
+          <div id="sliders"></div>
+          <p class="note">Weights are shown as shares of 100.</p>
+        </details>
+      </div>
+      <div>
+        <ol class="ranklist" id="ranklist"></ol>
+        <div class="print-only" id="printMatrix"></div>
+        <p class="sr" aria-live="polite" id="rankAnnounce"></p>
+        <p class="note">The same three options make the top three under four of the five presets. Only size first swaps in UAE to India.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ECONOMICS -->
+<section id="economics">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">04 · Corridor economics</span>
+      <h2>What one corridor could be worth</h2>
+      <p class="muted">Every input is editable. Flow and cost are public data. Share and take rate are my assumptions.</p>
+    </div>
+    <div class="panel">
+      <span class="flag">Illustrative, not Fuze data</span>
+      <div class="econ">
+        <form id="econForm" onsubmit="return false">
+          <div class="field"><label for="eCorr">Corridor</label><select id="eCorr"></select></div>
+          <div class="field"><label for="eFlow">Annual corridor flow, $B <span class="subtle" id="eFlowSrc"></span></label><input type="number" id="eFlow" step="0.1" min="0"></div>
+          <div class="field"><label for="eInc">Incumbent cost for $200, % <span class="subtle">World Bank</span></label><input type="number" id="eInc" step="0.01" min="0"></div>
+          <div class="field"><label for="eShare">Share moving to stablecoin rails via partners <output id="eShareOut" for="eShare"></output></label><input type="range" id="eShare" min="0.5" max="10" step="0.5"></div>
+          <div class="pair">
+            <div class="field"><label for="eTL">Take rate low, %</label><input type="number" id="eTL" step="0.05" min="0"></div>
+            <div class="field"><label for="eTH">Take rate high, %</label><input type="number" id="eTH" step="0.05" min="0"></div>
+          </div>
+          <button type="button" class="btn ghost small" id="eReset">Reset inputs</button>
+        </form>
+        <div>
+          <div class="stats">
+            <div class="stat"><span class="label">Volume on rails</span><div class="v num" id="oVol"></div></div>
+            <div class="stat"><span class="label">Fuze revenue band</span><div class="v num" id="oRev"></div></div>
+            <div class="stat"><span class="label">Price headroom</span><div class="v num" id="oHead"></div></div>
+          </div>
+          <div class="chart" role="img" aria-labelledby="chartDesc"><svg id="eChart" viewBox="0 0 560 300"></svg></div>
+          <p class="sr" id="chartDesc"></p>
+          <div class="legend"><span><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="var(--s1)"/></svg>Take rate high</span><span><svg width="14" height="14" aria-hidden="true"><rect x="2" y="2" width="10" height="10" fill="var(--s2)"/></svg>Take rate low</span><span><svg width="14" height="14" aria-hidden="true"><line x1="7" y1="0" x2="7" y2="14" stroke="var(--muted)" stroke-dasharray="3 3"/></svg>Current share</span></div>
+          <p class="note" id="econNote"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. RECOMMENDATION -->
+<section id="recommendation">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">05 · Recommendation</span>
+      <h2>Three moves, <span class="acc">in sequence</span></h2>
+      <p class="muted">Hypotheses, not conclusions. The next section lists what would confirm them.</p>
+    </div>
+    <div class="recs">
+      <article class="rec">
+        <span class="step">Move 01 · now</span>
+        <h3>Europe institutional to Gulf</h3>
+        <dl>
+          <dt>Why first</dt><dd>Regulated status at both ends already: <span class="nw">SO-FIT</span> in Switzerland, CBUAE and VARA in the UAE. B2B only.</dd>
+          <dt>Licence path</dt><dd>Swiss and UAE routes in place. EU clients need MiCA authorisation.</dd>
+          <dt>Main risk</dt><dd>Early demand. Around 4 out of 5 Swiss banks have no regulated crypto offer yet.</dd>
+          <dt>Would change my mind</dt><dd>Little Gulf linked demand in the Swiss pipeline.</dd>
+        </dl>
+      </article>
+      <article class="rec">
+        <span class="step">Move 02 · next</span>
+        <h3>Gulf to Pakistan, UAE leg first</h3>
+        <dl>
+          <dt>Why second</dt><dd>$17.2B a year from Saudi Arabia and the UAE. Jazari as a MENA partner. Fuze has said it is exploring Pakistan inbound remittances. PVARA rules live since August 2026.</dd>
+          <dt>Licence path</dt><dd>UAE: foreign stablecoins may only pay for virtual assets, so settle via a dirham token or B2B. Pakistan: PVARA, NOC first. Saudi Arabia: no rulebook yet.</dd>
+          <dt>Main risk</dt><dd>The UAE leg already costs 2.17%. The case is speed for exchange houses, not price.</dd>
+          <dt>Would change my mind</dt><dd>PVARA licences slipping well into 2027.</dd>
+        </dl>
+      </article>
+      <article class="rec">
+        <span class="step">Move 03 · later</span>
+        <h3>US to Latin America, Mexico first</h3>
+        <dl>
+          <dt>Why third</dt><dd>Top score on size and demand: $61.8B into Mexico in 2025. Modern Treasury covers the US end.</dd>
+          <dt>Licence path</dt><dd>US: GENIUS Act, OCC final rule October 2026. Mexico: licensed local payout partners.</dd>
+          <dt>Main risk</dt><dd>The most crowded stablecoin corridor, far from Fuze's base.</dd>
+          <dt>Would change my mind</dt><dd>US account users already skewing to Latin America.</dd>
+        </dl>
+      </article>
+    </div>
+    <p class="why-order"><b>Why not the pure score order?</b> The score shows where the opportunity is, and US to Latin America leads. The sequence shows what Fuze can start with what it already holds. If Saudi Arabia publishes a stablecoin rulebook, the Saudi leg moves up.</p>
+  </div>
+</section>
+
+<!-- 7. VALIDATE -->
+<section id="validate">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">06 · What I would check with Fuze's data</span>
+      <h2>Five questions public data cannot answer</h2>
+      <p class="muted">Public data shows the market, not Fuze's position in it.</p>
+    </div>
+    <ol class="qs">
+      <li><div><b>Partner pipeline.</b><span>Who already asks for stablecoin settlement on these three routes?</span></div></li>
+      <li><div><b>Take rates.</b><span>How far is today's take rate from the 0.3% to 1.0% band I assumed?</span></div></li>
+      <li><div><b>Licence timelines.</b><span>Realistic time and cost to a PVARA licence and to MiCA authorisation?</span></div></li>
+      <li><div><b>Customer concentration.</b><span>Would a new corridor spread volume or deepen reliance on the top ten clients?</span></div></li>
+      <li><div><b>Compliance cost per corridor.</b><span>What does one new corridor cost to run, and at what volume does it pay?</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 8. WHY ME -->
+<section id="whyme">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">07 · Why me</span>
+      <h2>How this maps to the role</h2>
+    </div>
+    <table class="fit">
+      <thead><tr><th scope="col">What the role asks</th><th scope="col">Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>3 to 5 years in strategy consulting or Big 4</td><td>3+ years: strategy and operations consultant at NTT Data (Apr 2025 to present), analyst in IM Alternatives consulting at Deloitte Luxembourg (Sep 2023 to Dec 2024).</td></tr>
+        <tr><td>Problem structuring and quantitative modelling</td><td>Built a P&amp;L model across 6 business lines from primary data for a major Spanish financial institution (Cecabank). Structured 77 cost items into 6 blocks.</td></tr>
+        <tr><td>Corridor economics and competitive benchmarking</td><td>Market benchmark across 7+ countries structured around 3 strategic models, ending in a prioritised recommendation with financial evidence.</td></tr>
+        <tr><td>Turn regulation into commercial strategy</td><td>Managed regulatory and compliance operations for Wellington Management ($1.3T AuM) across 35+ jurisdictions, including the UAE, with legal, risk and compliance teams.</td></tr>
+        <tr><td>Senior communication with founders, investors and regulators</td><td>Presented to 8+ stakeholders including 3 client directors. 80+ cross functional workshops over 4 months. Coordinated 10+ stakeholders including regulatory authorities across the EU, UK and APAC.</td></tr>
+        <tr><td>Ventures and M&amp;A support</td><td>Scoring frameworks and business cases to evaluate partnership opportunities.</td></tr>
+        <tr><td>Curiosity about stablecoins and regulated crypto</td><td>This page, plus my own preparation on VARA, MiCA, the GENIUS Act and CBUAE rules.</td></tr>
+        <tr><td>GCC knowledge</td><td>Committed to relocating to Dubai and can start within 15 days. I do not speak Arabic.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 9. SOURCES -->
+<section id="sources">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">08 · Sources and method</span>
+      <h2>How this was built</h2>
+    </div>
+    <div class="method">
+      <details class="src"><summary>Method</summary>
+        <ul>
+          <li>Each option is scored 1 to 5 on six criteria against fixed anchors set before scoring. The weighted sum gives a score out of 5.</li>
+          <li>Costs are World Bank Remittance Prices Worldwide averages for sending $200, Q3 2025. Flows are central bank figures, some as reported by the press. Adoption is the Chainalysis index.</li>
+          <li>Regulatory points were checked against regulator text where the site allowed it, and dated.</li>
+          <li id="estCount" data-computed></li>
+        </ul>
+      </details>
+      <details class="src"><summary>Limits</summary>
+        <ul>
+          <li>Public data only. I have no view of Fuze's pipeline, take rates or plans.</li>
+          <li>Corridor level flows are not published for every route. Where missing, I say so or mark an estimate.</li>
+          <li>Chainalysis changed its method in 2026. Ranks from 2025 and 2026 are not comparable.</li>
+          <li>Some central bank figures are taken from press reports of the official release. They are marked in the source list.</li>
+          <li>Fuze's own public pages quote different volume figures, so this page shows none.</li>
+        </ul>
+      </details>
+      <details class="src"><summary>All sources <span class="subtle" id="srcCount" data-computed></span></summary>
+        <ul class="srclist" id="srclist"></ul>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Prepared by Iker Barenys · November 2026 · <a class="no-print" href="fuze-expansion-priorities.pdf">PDF version</a></span>
+    <span>Independent analysis based on public information only. Not an official Fuze page and not affiliated with or endorsed by Fuze.</span>
+  </div>
+</footer>
+
+<script id="data" type="application/json">{"meta":{"title":"Where should Fuze go next? Data file","prepared_by":"Iker Barenys","retrieval_date_default":"2026-11-17","rules":"Every number shown on the page must exist here. estimate=true means my own calculation or assumption. source_type: primary = regulator, central bank, World Bank, company release; secondary = press report of a primary figure (to be replaced or verified before publishing).","fx_pegs":{"AED_per_USD":{"value":3.6725,"source":"CBUAE fixed peg","url":"https://www.centralbank.ae/en/our-operations/monetary-policy/","retrieved":"2026-11-17","estimate":false},"SAR_per_USD":{"value":3.75,"source":"SAMA fixed peg","url":"https://www.sama.gov.sa/","retrieved":"2026-11-17","estimate":false}}},"fuze_timeline":[{"id":"tl_vara","date":"2023-10-19","event":"VARA licence, Broker-Dealer Services (VL/23/10/002), entity Morpheus Software Technology FZE (FUZE), status Active","source":"VARA Public Register","url":"https://www.vara.ae/en/licenses-and-register/public-register/","retrieved":"2026-11-17","source_type":"primary","track":"MENA"},{"id":"tl_cbuae","date":"n/a","event":"CBUAE licence, Category III Retail Payment Services, entity Niobe Payment Services L.L.C.-S.P.C.","source":"Fuze Trust Centre; Fuze Jazari release disclaimer","url":"https://fuze.finance/trust-center","retrieved":"2026-11-17","source_type":"primary","track":"MENA","note":"Licence date not shown in a primary source; show without a date."},{"id":"tl_pk","date":"2025-05-19","event":"Stated interest in Pakistan, including inbound remittances; no formal operations announced","source":"ProPakistani (sponsored article)","url":"https://propakistani.pk/2025/05/19/fuze-expands-digital-assets-infrastructure-across-mena-and-eyes-pakistans-emerging-market/","retrieved":"2026-11-17","source_type":"primary","track":"MENA","note":"Opened in browser 2026-11-17: dated 19 May 2025, labelled Sponsored. States Fuze is exploring inbound remittances to Pakistan and that no formal operations are announced. Automated fetch returns 403."},{"id":"tl_jazari","date":"2025-12-12","event":"Partnership with Jazari (Remit Now, Pay Later) for MENA cross border remittance, phased rollout","source":"Fuze blog","url":"https://fuze.finance/blog/fuze-jazari","retrieved":"2026-11-17","source_type":"primary","track":"MENA"},{"id":"tl_ch","date":"2026-09-08","event":"Switzerland entry: SO-FIT affiliated financial intermediary under AMLA, B2B only, private banks and wealth managers; not FINMA licensed","source":"PR Newswire (Fuze release)","url":"https://www.prnewswire.com/news-releases/fuze-finance-expands-to-switzerland-to-serve-growing-demand-for-crypto-assets-and-stablecoins-302871513.html","retrieved":"2026-11-17","source_type":"primary","track":"Europe institutional"},{"id":"tl_us","date":"2026-10-19","event":"US expansion with Modern Treasury: US accounts, USDG/USDC/USDT, ACH, wires, RTP, FedNow","source":"Modern Treasury press release","url":"https://www.moderntreasury.com/newsroom/press-releases/fuze-finance-partners-with-modern-treasury-s-payments-infrastructure-for-u-s-expansion","retrieved":"2026-11-17","source_type":"primary","track":"US dollar access"}],"fuze_volume_conflict":{"decision":"Do not show any Fuze volume figure.","values_seen":[{"value":"$10 billion in annual volume","source":"Modern Treasury release, 2026-10-19","url":"https://www.moderntreasury.com/newsroom/press-releases/fuze-finance-partners-with-modern-treasury-s-payments-infrastructure-for-u-s-expansion"},{"value":"$20 B Annual Volume Processed","source":"fuze.finance home page, undated","url":"https://fuze.finance"}]},"points":[{"id":"rpw_global_avg","label":"Global average cost of sending $200","value":6.36,"unit":"% of amount sent","period":"Q3 2025","source":"World Bank, Remittance Prices Worldwide","url":"https://remittanceprices.worldbank.org/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"sdg_target","label":"SDG 10.c target for remittance cost","value":3,"unit":"% of amount sent","period":"by 2030","source":"UN SDG indicator 10.c.1 metadata","url":"https://unstats.un.org/sdgs/metadata/files/Metadata-10-0C-01.pdf","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_in_200","label":"UAE to India, avg total cost, $200","value":3.72,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/India","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_in_500","label":"UAE to India, avg total cost, $500","value":2.19,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/India","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_pk_200","label":"UAE to Pakistan, avg total cost, $200","value":2.17,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/Pakistan","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_pk_500","label":"UAE to Pakistan, avg total cost, $500","value":1.53,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/Pakistan","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_ph_200","label":"UAE to Philippines, avg total cost, $200","value":3.04,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/Philippines","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_ph_500","label":"UAE to Philippines, avg total cost, $500","value":1.61,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/Philippines","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_eg_200","label":"UAE to Egypt, avg total cost, $200","value":3.7,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/Egypt","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_bd_200","label":"UAE to Bangladesh, avg total cost, $200","value":7.72,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/Bangladesh","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ae_bd_500","label":"UAE to Bangladesh, avg total cost, $500","value":6.53,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-Arab-Emirates/Bangladesh","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_sa_in_200","label":"Saudi Arabia to India, avg total cost, $200","value":5.59,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/India","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_sa_pk_200","label":"Saudi Arabia to Pakistan, avg total cost, $200","value":5.02,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/Pakistan","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_sa_pk_500","label":"Saudi Arabia to Pakistan, avg total cost, $500","value":2.82,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/Pakistan","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_sa_eg_200","label":"Saudi Arabia to Egypt, avg total cost, $200","value":5.15,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/Egypt","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_sa_bd_200","label":"Saudi Arabia to Bangladesh, avg total cost, $200","value":10.2,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/Bangladesh","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_sa_ph_200","label":"Saudi Arabia to Philippines, avg total cost, $200","value":3.82,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/Philippines","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_sa_et_200","label":"Saudi Arabia to Ethiopia, avg total cost, $200","value":7.85,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/Ethiopia","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_sa_et_500","label":"Saudi Arabia to Ethiopia, avg total cost, $500","value":6.26,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/Ethiopia","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_us_mx_200","label":"US to Mexico, avg total cost, $200","value":4.54,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-States/Mexico","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_us_mx_500","label":"US to Mexico, avg total cost, $500","value":2.99,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-States/Mexico","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_us_gt_200","label":"US to Guatemala, avg total cost, $200","value":4.19,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-States/Guatemala","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_us_co_200","label":"US to Colombia, avg total cost, $200","value":4.96,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-States/Colombia","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_us_br_200","label":"US to Brazil, avg total cost, $200","value":5.63,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/United-States/Brazil","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_de_tr_200","label":"Germany to Türkiye, avg total cost, $200","value":4.01,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Germany/Türkiye","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"rpw_ch_rs_200","label":"Switzerland to Serbia, avg total cost, $200","value":5.62,"unit":"%","period":"Q3 2025","source":"World Bank RPW corridor page","url":"https://remittanceprices.worldbank.org/corridor/Switzerland/Serbia","retrieved":"2026-11-17","estimate":false,"source_type":"primary","note":"RPW has no Switzerland to MENA corridor. Shown only as context; not used for the Europe institutional candidate."},{"id":"ae_outflows_2024_aed","label":"UAE outward personal transfers","value":214.7,"unit":"AED billion","period":"2024","source":"CBUAE, Balance of Payments Developments 2023 to 2024 (Oct 2025)","url":"https://www.centralbank.ae/media/aqknxvll/balance-of-payments-developments_2023_2024-oct_2025_en.pdf","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"ae_outflows_2024_usd","label":"UAE outward personal transfers in USD","value":58.5,"unit":"USD billion","period":"2024","source":"Derived: 214.7 / 3.6725","url":"https://www.centralbank.ae/media/aqknxvll/balance-of-payments-developments_2023_2024-oct_2025_en.pdf","retrieved":"2026-11-17","estimate":true,"source_type":"derived"},{"id":"sa_outflows_2025_sar","label":"Saudi Arabia expatriate remittances","value":165.5,"unit":"SAR billion","period":"2025","source":"SAMA data as reported by Zawya","url":"https://www.zawya.com/en/economy/gcc/saudi-remittances-of-expatriates-surge-15-to-over-44bln-in-2025-ylajtgb0","retrieved":"2026-11-17","estimate":false,"source_type":"secondary"},{"id":"sa_outflows_2025_usd","label":"Saudi Arabia expatriate remittances in USD","value":44.1,"unit":"USD billion","period":"2025","source":"Derived: 165.5 / 3.75","url":"https://www.zawya.com/en/economy/gcc/saudi-remittances-of-expatriates-surge-15-to-over-44bln-in-2025-ylajtgb0","retrieved":"2026-11-17","estimate":true,"source_type":"derived"},{"id":"pk_total_fy25","label":"Pakistan workers' remittances, total","value":38.3,"unit":"USD billion","period":"FY2025 (Jul 2024 to Jun 2025)","source":"SBP data as reported by Arab News","url":"https://www.arabnews.pk/node/2607475","retrieved":"2026-11-17","estimate":false,"source_type":"secondary"},{"id":"pk_from_sa_fy25","label":"Pakistan remittances from Saudi Arabia","value":9.345,"unit":"USD billion","period":"FY2025","source":"SBP data as reported by Arab News","url":"https://www.arabnews.pk/node/2607475","retrieved":"2026-11-17","estimate":false,"source_type":"secondary"},{"id":"pk_from_ae_fy25","label":"Pakistan remittances from UAE","value":7.83,"unit":"USD billion","period":"FY2025","source":"SBP data as reported by Arab News","url":"https://www.arabnews.pk/node/2607475","retrieved":"2026-11-17","estimate":false,"source_type":"secondary","note":"Profit (Pakistan Today) reports 7.869. Replace both with SBP file Homeremit_Arch.xlsx before publishing."},{"id":"in_total_fy24","label":"India inward remittances, total (RBI survey base)","value":118.7,"unit":"USD billion","period":"FY2023-24","source":"RBI Bulletin March 2025, Remittances Survey round 6, as reported by Business Standard","url":"https://www.business-standard.com/amp/economy/news/remittances-to-india-from-advanced-economies-surpass-gulf-inflows-rbi-125031901164_1.html","retrieved":"2026-11-17","estimate":false,"source_type":"secondary"},{"id":"in_share_ae_fy24","label":"UAE share of India inward remittances","value":19.2,"unit":"%","period":"FY2023-24","source":"RBI Remittances Survey round 6, as reported","url":"https://www.business-standard.com/amp/economy/news/remittances-to-india-from-advanced-economies-surpass-gulf-inflows-rbi-125031901164_1.html","retrieved":"2026-11-17","estimate":false,"source_type":"secondary"},{"id":"in_from_ae_fy24","label":"India remittances from UAE (derived)","value":22.8,"unit":"USD billion","period":"FY2023-24","source":"Derived: 19.2% x 118.7","url":"","retrieved":"2026-11-17","estimate":true,"source_type":"derived"},{"id":"ph_total_2025","label":"Philippines cash remittances, total","value":35.634,"unit":"USD billion","period":"2025","source":"BSP data as reported by press","url":"https://www.gmanetwork.com/news_duplicate/money/economy/976670/remittances-filipinos-december-2025/story/","retrieved":"2026-11-17","estimate":false,"source_type":"secondary"},{"id":"ph_share_ae_2025","label":"UAE share of Philippines cash remittances","value":4.6,"unit":"%","period":"2025","source":"BSP data as reported by press","url":"https://www.gmanetwork.com/news_duplicate/money/economy/976670/remittances-filipinos-december-2025/story/","retrieved":"2026-11-17","estimate":false,"source_type":"secondary","note":"BSP warns US share is overstated because of correspondent bank routing; same caveat makes Gulf shares understated."},{"id":"ph_share_sa_2025","label":"Saudi share of Philippines cash remittances","value":6.6,"unit":"%","period":"2025","source":"BSP data as reported by press","url":"https://www.gmanetwork.com/news_duplicate/money/economy/976670/remittances-filipinos-december-2025/story/","retrieved":"2026-11-17","estimate":false,"source_type":"secondary"},{"id":"ph_from_ae_2025","label":"Philippines remittances from UAE (derived)","value":1.6,"unit":"USD billion","period":"2025","source":"Derived: 4.6% x 35.634","url":"","retrieved":"2026-11-17","estimate":true,"source_type":"derived"},{"id":"eg_total_fy25","label":"Egypt remittances from Egyptians abroad","value":36.5,"unit":"USD billion","period":"FY2024/25","source":"CBE statement as reported by Daily News Egypt","url":"https://www.dailynewsegypt.com/?p=836488","retrieved":"2026-11-17","estimate":false,"source_type":"secondary","note":"CBE does not publish a source country split that I could access. Gulf share left as n/a."},{"id":"bd_total_fy25","label":"Bangladesh workers' remittances, total","value":30328.8,"unit":"USD million","period":"FY2024-25 (revised)","source":"Bangladesh Bank, Workers' Remittances Inflows [Annual Data]","url":"https://www.bb.org.bd/en/index.php/econdata/bop_yearly/5","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"bd_from_sa_fy25","label":"Bangladesh remittances from Saudi Arabia","value":4264.4,"unit":"USD million","period":"FY2024-25 (revised)","source":"Bangladesh Bank","url":"https://www.bb.org.bd/en/index.php/econdata/bop_yearly/5","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"bd_from_ae_fy25","label":"Bangladesh remittances from UAE","value":4168.2,"unit":"USD million","period":"FY2024-25 (revised)","source":"Bangladesh Bank","url":"https://www.bb.org.bd/en/index.php/econdata/bop_yearly/5","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"mx_total_2025","label":"Mexico remittance inflows","value":61.791,"unit":"USD billion","period":"2025","source":"Banxico as reported by press","url":"https://www.unotv.com/negocios/remesas-mexico-caen-4-6-2025-banxico/","retrieved":"2026-11-17","estimate":false,"source_type":"secondary","note":"Down 4.6% on 2024. Nearly all from the US, but no exact share captured; do not state one."},{"id":"cha26_method","label":"Chainalysis 2026 index coverage","value":117,"unit":"countries ranked","period":"Jul 2025 to Jun 2026","source":"Chainalysis, 2026 Global Crypto Adoption Index","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"cha26_brazil","label":"Chainalysis 2026 rank, Brazil","value":1,"unit":"rank","period":"2026 index","source":"Chainalysis","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"cha26_india","label":"Chainalysis 2026 rank, India","value":6,"unit":"rank","period":"2026 index","source":"Chainalysis","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"cha26_mexico","label":"Chainalysis 2026 rank, Mexico","value":11,"unit":"rank","period":"2026 index","source":"Chainalysis","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"cha26_philippines","label":"Chainalysis 2026 rank, Philippines","value":19,"unit":"rank","period":"2026 index","source":"Chainalysis","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"cha26_turkiye","label":"Chainalysis 2026 rank, Türkiye","value":20,"unit":"rank","period":"2026 index","source":"Chainalysis","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"cha26_nigeria","label":"Chainalysis 2026 rank, Nigeria","value":3,"unit":"rank","period":"2026 index","source":"Chainalysis","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"cha25_pakistan","label":"Chainalysis 2025 rank, Pakistan","value":3,"unit":"rank","period":"2025 index (different method, 151 countries)","source":"Chainalysis, 2025 Global Adoption Index","url":"https://www.chainalysis.com/blog/2025-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary","note":"Pakistan not in 2026 top 20 published table; full 2026 list is in the gated report. Do not compare ranks across years."},{"id":"cha26_xborder_stable_from","label":"Cross border stablecoin value, monthly","value":11,"unit":"USD billion per month","period":"January 2025","source":"Chainalysis 2026 index blog","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"cha26_xborder_stable_to","label":"Cross border stablecoin value, monthly","value":24,"unit":"USD billion per month","period":"June 2026","source":"Chainalysis 2026 index blog","url":"https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/","retrieved":"2026-11-17","estimate":false,"source_type":"primary"},{"id":"fuze_tr_presence","label":"Fuze presence in Türkiye","value":"Turkish entity listed (Fuze Teknoloji A.Ş.); Istanbul office","unit":"text","period":"2026","source":"Fuze Trust Centre and fuze.finance locations","url":"https://fuze.finance/trust-center","retrieved":"2026-11-17","estimate":false,"source_type":"primary","note":"Licence type in Türkiye not shown on an official page; do not name one."},{"id":"ch_banks_no_crypto","label":"Swiss banks without a regulated crypto offer","value":"around 4 out of 5","unit":"share of Swiss banks","period":"as cited Sep 2026","source":"IMF (citing FINMA), as quoted in the Fuze Switzerland release","url":"https://www.prnewswire.com/news-releases/fuze-finance-expands-to-switzerland-to-serve-growing-demand-for-crypto-assets-and-stablecoins-302871513.html","retrieved":"2026-11-17","estimate":false,"source_type":"primary","note":"Verified verbatim in browser 2026-11-17: \"According to the IMF (referencing FINMA), around 4 out of 5 Swiss banks are yet to establish a regulated crypto-assets offering.\""},{"id":"econ_take_rate_low","label":"Illustrative Fuze B2B take rate, low","value":0.3,"unit":"% of volume","period":"assumption","source":"My estimate. Editable on the page.","url":"","retrieved":"2026-11-17","estimate":true,"source_type":"assumption"},{"id":"econ_take_rate_high","label":"Illustrative Fuze B2B take rate, high","value":1,"unit":"% of volume","period":"assumption","source":"My estimate. Editable on the page.","url":"","retrieved":"2026-11-17","estimate":true,"source_type":"assumption"},{"id":"econ_share_captured","label":"Illustrative share of corridor flow on stablecoin rails via partners","value":1,"unit":"% of corridor flow","period":"assumption","source":"My estimate. Editable on the page.","url":"","retrieved":"2026-11-17","estimate":true,"source_type":"assumption"},{"id":"pk_from_gulf_fy25","label":"Pakistan remittances from Saudi Arabia and UAE combined","value":17.18,"unit":"USD billion","period":"FY2025","source":"Derived: 9.345 + 7.83 (SBP, as reported)","url":"https://www.arabnews.pk/node/2607475","retrieved":"2026-11-17","estimate":true,"source_type":"derived"},{"id":"rpw_gulf_pk_wavg","label":"Gulf to Pakistan cost for $200, weighted by flow","value":3.72,"unit":"%","period":"Q3 2025 costs, FY2025 flows","source":"Derived from World Bank RPW and SBP figures","url":"https://remittanceprices.worldbank.org/corridor/Saudi-Arabia/Pakistan","retrieved":"2026-11-17","estimate":true,"source_type":"derived"}],"regulatory":[{"id":"reg_ae_pts","market":"UAE","verdict":"Open with licence, with a key limit","summary":"Payment Token Services Regulation in force since 31 Aug 2024. Transfers allowed for Dirham Payment Tokens for any lawful purpose; Foreign Payment Tokens (e.g. USDC, USDT) only as a means of payment to buy virtual assets. Algorithmic stablecoins and privacy tokens prohibited.","source":"CBUAE Rulebook, Payment Token Services Regulation, Article 2","url":"https://rulebook.centralbank.ae/en/rulebook/payment-token-services-regulation","doc_date":"2024-08-31","retrieved":"2026-11-17","verified":"primary"},{"id":"reg_pk","market":"Pakistan","verdict":"Framework live, licensing in transition","summary":"Virtual Assets Act 2026 (PVARA). Services Regulations notified 21 Aug 2026 (S.R.O. 1419(I)/2026, 1420(I)/2026). NOC deadline 5 Sep 2026 for existing operators. NOCs granted to global exchanges from Dec 2025; PVARA states an NOC is not a licence. No full VASP licence found yet.","source":"PVARA","url":"https://pvara.gov.pk/regulations","doc_date":"2026-08-21","retrieved":"2026-11-17","verified":"primary","note":"SBP stance on banks not verified (site blocks automated access)."},{"id":"reg_in","market":"India","verdict":"Restricted, framework pending","summary":"30% tax and 1% TDS retained in Budget 2026. VASPs must register with FIU-IND (since 2023). RBI reported to lean towards prohibition and to oppose foreign and rupee stablecoins. Discussion paper not released.","source":"FIU-IND (registration); press on Budget 2026 and RBI stance","url":"https://fiuindia.gov.in/","doc_date":"2026","retrieved":"2026-11-17","verified":"partly primary","note":"Tax and RBI stance from secondary sources; verify before publishing."},{"id":"reg_ph","market":"Philippines","verdict":"Restricted for new entrants","summary":"BSP moratorium on new VASP licences reported as still in place. SEC CASP rules (MC 04 and 05 of 2025) effective July 2025 provide a separate route.","source":"Secondary (BSP and SEC sites not readable)","url":"https://bitpinas.com/regulation/bsp-reminds-vasp/","doc_date":"2025-2026","retrieved":"2026-11-17","verified":"secondary","note":"Must confirm on bsp.gov.ph before publishing, or state as 'reported'."},{"id":"reg_eg","market":"Egypt","verdict":"Prohibited without CBE licence","summary":"Law 194 of 2020, Article 206 bars issuing, trading or promoting crypto without a CBE board licence. No licence disclosed.","source":"Chambers Fintech 2026 (CBE site blocked)","url":"https://gpg-pdf.chambers.com/fintech-2026/228/","doc_date":"2020 law; 2026 guide","retrieved":"2026-11-17","verified":"secondary"},{"id":"reg_bd","market":"Bangladesh","verdict":"Prohibited (central bank warnings)","summary":"Bangladesh Bank has warned against crypto since 2014 and 2017; no licensing route found.","source":"Bangladesh Bank (operative text not read)","url":"https://www.bb.org.bd/en/index.php/mediaroom/circular","doc_date":"n/a","retrieved":"2026-11-17","verified":"unverified","note":"Show as 'no licensing route found', not as a legal ban, unless verified."},{"id":"reg_sa","market":"Saudi Arabia","verdict":"Framework pending","summary":"No published SAMA or CMA stablecoin or crypto rulebook found. Stablecoin plans announced late 2025; CMA sandbox running.","source":"CMA announcements page; secondary trackers","url":"https://cma.gov.sa/","doc_date":"2026-11-16 (latest announcement checked)","retrieved":"2026-11-17","verified":"partly primary"},{"id":"reg_tr","market":"Türkiye","verdict":"Open with licence; crypto payments banned","summary":"SPK licenses crypto asset service providers under communiqués III-35/B.1 and B.2; interim list of 48 operators. CBRT regulation bars use of crypto assets in payments.","source":"SPK; CBRT payments page","url":"https://spk.gov.tr/kurumlar/kripto-varlik-hizmet-saglayicilar/basvuru-surecleri","doc_date":"2026-09-23 (latest SPK decision seen)","retrieved":"2026-11-17","verified":"primary"},{"id":"reg_us","market":"United States","verdict":"Open, rules being finalised","summary":"GENIUS Act enacted 18 Jul 2025. OCC final implementing rule 21 Oct 2026; BSA/AML rules to follow with Treasury. Act effective by 18 Jan 2027 at the latest.","source":"OCC News Release 2026-92","url":"https://occ.treas.gov/news-issuances/news-releases/2026/nr-occ-2026-92.html","doc_date":"2026-10-21","retrieved":"2026-11-17","verified":"primary","note":"Enactment date and 18 Jan 2027 effective date from secondary summaries; congress.gov blocked by bot challenge."},{"id":"reg_eu","market":"EU (MiCA)","verdict":"Open with licence","summary":"MiCA transitional period ended 1 Jul 2026; unauthorised CASPs had to wind down. E-money tokens only by credit or e-money institutions (Art. 48), no interest (Art. 50).","source":"ESMA statements; EUR-Lex Regulation (EU) 2023/1114","url":"https://www.esma.europa.eu/sites/default/files/2026-06/ESMA75-113276571-1710_Public_Statement_MiCA_transitional_period_ends.pdf","doc_date":"2026-06-23","retrieved":"2026-11-17","verified":"primary"},{"id":"reg_ch","market":"Switzerland","verdict":"Open via SRO affiliation","summary":"Financial intermediaries under AMLA must join a FINMA-authorised SRO such as SO-FIT. FINMA Guidance 06/2024 on stablecoins not yet read.","source":"SO-FIT; FINMA fintech page","url":"https://www.so-fit.ch/","doc_date":"n/a","retrieved":"2026-11-17","verified":"partly primary"},{"id":"reg_ke","market":"Kenya","verdict":"Law passed, licensing being set up","summary":"VASP Act 2025 assented 15 Oct 2025. CBK and CMA as regulators. CMA has published licensing checklists. Kenya is on the FATF grey list (Oct 2026).","source":"CMA checklists; press on assent","url":"https://www.cma.or.ke/virtual-assets-service-providers-checklists/","doc_date":"2026-11-16","retrieved":"2026-11-17","verified":"partly primary"},{"id":"reg_mx","market":"Mexico","verdict":"Restricted for regulated institutions","summary":"Banxico Circular 4/2019 limits banks and fintechs offering virtual assets to clients. Status in 2026 not verified.","source":"Banxico (not reached)","url":"https://www.banxico.org.mx/","doc_date":"2019","retrieved":"2026-11-17","verified":"unverified"},{"id":"reg_fatf","market":"Global","verdict":"Context","summary":"FATF grey list, 30 Oct 2026, includes Kenya and Kuwait. It does not include UAE, Pakistan, Philippines, Egypt, Bangladesh, Türkiye, Saudi Arabia, India, Mexico or Nigeria.","source":"FATF, Jurisdictions under Increased Monitoring, 30 October 2026","url":"https://www.fatf-gafi.org/en/publications/High-risk-and-other-monitored-jurisdictions/increased-monitoring-october-2026.html","doc_date":"2026-10-30","retrieved":"2026-11-17","verified":"primary"}],"candidates":[{"id":"gcc_pk","name":"Gulf to Pakistan","type":"corridor","points":["pk_from_gulf_fy25","rpw_ae_pk_200","rpw_sa_pk_200","rpw_gulf_pk_wavg","cha25_pakistan"],"regulatory":["reg_ae_pts","reg_sa","reg_pk"]},{"id":"ae_in","name":"UAE to India","type":"corridor","points":["rpw_ae_in_200","rpw_ae_in_500","in_from_ae_fy24","cha26_india"],"regulatory":["reg_ae_pts","reg_in"]},{"id":"ae_ph","name":"UAE to Philippines","type":"corridor","points":["rpw_ae_ph_200","rpw_ae_ph_500","ph_from_ae_2025","cha26_philippines"],"regulatory":["reg_ae_pts","reg_ph"]},{"id":"gcc_eg","name":"Gulf to Egypt","type":"corridor","points":["rpw_ae_eg_200","rpw_sa_eg_200","eg_total_fy25"],"regulatory":["reg_eg"],"role":"low scorer kept for rigour"},{"id":"gcc_bd","name":"Gulf to Bangladesh","type":"corridor","points":["rpw_ae_bd_200","rpw_sa_bd_200","bd_from_ae_fy25","bd_from_sa_fy25"],"regulatory":["reg_bd"],"role":"low scorer kept for rigour"},{"id":"tr","name":"Türkiye (inbound and local)","type":"market","points":["rpw_de_tr_200","cha26_turkiye"],"regulatory":["reg_tr"],"note":"Fuze lists a Turkish entity and Istanbul office; frame as deepening, not entry."},{"id":"eu_gulf","name":"Europe institutional to Gulf","type":"institutional corridor","points":[],"regulatory":["reg_eu","reg_ch"],"note":"Not a remittance corridor; flow and cost criteria scored on proxies and marked as my estimate."},{"id":"us_latam","name":"US to Latin America (Mexico first)","type":"corridor","points":["rpw_us_mx_200","rpw_us_mx_500","mx_total_2025","cha26_mexico","cha26_brazil"],"regulatory":["reg_us","reg_mx"]},{"id":"sa_eaf","name":"Saudi Arabia to East Africa","type":"corridor","points":["rpw_sa_et_200","rpw_sa_et_500"],"regulatory":["reg_ke","reg_fatf"],"note":"UAE to Kenya, Uganda and Ethiopia are not covered by RPW."}]}</script>
+<script id="scores" type="application/json">{"meta":{"scale":"1 to 5 per criterion. Higher is always better for Fuze, including execution (5 = simplest to execute).","method":"Weighted sum of scores x weights (weights sum to 100), shown as a score out of 5. Ties broken by regulatory score.","scored":"2026-11-17","basis":"Public data in data.json. Where a score rests on judgement it is marked estimate: true."},"criteria":[{"id":"flow","name":"Flow size","weight":20,"definition":"How much money already moves on this route each year.","anchors":{"1":"Under $1B","2":"$1B to $4B, or not measured but likely small","3":"$4B to $8B","4":"$8B to $15B","5":"$15B or more a year"}},{"id":"adoption","name":"Stablecoin demand","weight":15,"definition":"How much people at the receiving end already use crypto and stablecoins.","anchors":{"1":"Activity pushed underground by restrictions","2":"Low visible activity","3":"Outside the top 20 but visible regional growth","4":"Rank 11 to 20 in 2026, or top 10 in 2025 only","5":"Top 10 in Chainalysis 2026 (or top 5 in 2025)"}},{"id":"regulation","name":"Regulatory clarity and licence path","weight":25,"definition":"Is there a clear, usable licence route at both ends for stablecoin payments?","anchors":{"1":"Prohibited at one end","2":"One end pending or restricted","3":"Clear at one end, the other in transition","4":"Clear at both ends with one material limit","5":"Clear licence route at both ends, usable for payments"}},{"id":"partners","name":"Partner and distribution access","weight":15,"definition":"Can Fuze reach customers through licences, offices or partners it already has?","anchors":{"1":"No visible presence","2":"Indirect presence (regional only)","3":"Fuze presence at one end only","4":"Fuze licence or office at one end plus a public link to the other","5":"Fuze licence and named partner at both ends"}},{"id":"economics","name":"Unit economics","weight":15,"definition":"Room for a stablecoin rail to undercut what customers pay today (World Bank average cost of sending $200).","anchors":{"1":"Under 3%","2":"3% to 4%","3":"4% to 5%","4":"5% to 7%","5":"Incumbent cost 7% or more"}},{"id":"execution","name":"Execution ease","weight":10,"definition":"How hard to deliver: new licences needed, FX controls, FATF status, competition. 5 = simplest.","anchors":{"1":"Grey list or ban plus FX controls","2":"Two or more of: new licence, FX controls, crowded market","3":"One new licence or notable FX friction","4":"One light registration","5":"No new licence, no FX controls, light competition"}}],"candidates":[{"id":"gcc_pk","name":"Gulf to Pakistan","track":"MENA corridors","scores":{"flow":{"score":5,"estimate":false,"why":"$17.2B a year from Saudi Arabia ($9.3B) and the UAE ($7.8B), FY2025 (SBP, as reported).","refs":["pk_from_gulf_fy25","pk_from_sa_fy25","pk_from_ae_fy25"]},"adoption":{"score":4,"estimate":false,"why":"Pakistan ranked 3rd in Chainalysis 2025; not in the 2026 published top 20 under a new method.","refs":["cha25_pakistan"]},"regulation":{"score":3,"estimate":false,"why":"UAE leg workable now, with the limit on foreign stablecoins. Saudi leg has no rulebook yet. Pakistan's PVARA rules are live since Aug 2026, NOCs only so far.","refs":["reg_ae_pts","reg_sa","reg_pk"]},"partners":{"score":4,"estimate":true,"why":"CBUAE and VARA licences in the UAE; Jazari MENA remittance partner; stated interest in Pakistan inbound remittances.","refs":["tl_cbuae","tl_vara","tl_jazari","tl_pk"]},"economics":{"score":2,"estimate":false,"why":"Cheap from the UAE (2.17%), dearer from Saudi Arabia (5.02%). Weighted by flow: 3.72%.","refs":["rpw_ae_pk_200","rpw_sa_pk_200","rpw_gulf_pk_wavg"]},"execution":{"score":3,"estimate":true,"why":"One new licence in Pakistan; FX controls on the receiving side; not on the FATF grey list. Start with the UAE leg.","refs":["reg_pk","reg_fatf"]}}},{"id":"ae_in","name":"UAE to India","track":"MENA corridors","scores":{"flow":{"score":5,"estimate":true,"why":"About $22.8B (19.2% of $118.7B, FY2023-24; my calculation).","refs":["in_from_ae_fy24"]},"adoption":{"score":5,"estimate":false,"why":"India ranked 6th in Chainalysis 2026 and 1st in 2025.","refs":["cha26_india"]},"regulation":{"score":2,"estimate":false,"why":"30% tax and 1% TDS; RBI reported to oppose stablecoins; no framework yet.","refs":["reg_in"]},"partners":{"score":3,"estimate":true,"why":"Strong sending end; no visible Indian partner route for stablecoin payout.","refs":["tl_cbuae"]},"economics":{"score":2,"estimate":false,"why":"3.72% for $200, 2.19% for $500.","refs":["rpw_ae_in_200","rpw_ae_in_500"]},"execution":{"score":2,"estimate":true,"why":"Hostile central bank stance and tax friction at the receiving end; crowded corridor.","refs":["reg_in"]}}},{"id":"ae_ph","name":"UAE to Philippines","track":"MENA corridors","scores":{"flow":{"score":2,"estimate":true,"why":"About $1.6B (4.6% of $35.6B in 2025); BSP notes Gulf shares are likely understated.","refs":["ph_from_ae_2025","ph_share_ae_2025"]},"adoption":{"score":4,"estimate":false,"why":"Philippines ranked 19th in Chainalysis 2026.","refs":["cha26_philippines"]},"regulation":{"score":2,"estimate":false,"why":"BSP freeze on new VASP licences reported; SEC CASP route exists since 2025.","refs":["reg_ph"]},"partners":{"score":3,"estimate":true,"why":"Sending end only.","refs":["tl_cbuae"]},"economics":{"score":2,"estimate":false,"why":"3.04% for $200.","refs":["rpw_ae_ph_200"]},"execution":{"score":3,"estimate":true,"why":"One new licence route; no FX controls of note; not on the grey list.","refs":["reg_fatf"]}}},{"id":"gcc_eg","name":"Gulf to Egypt","track":"MENA corridors","role":"kept for rigour","scores":{"flow":{"score":4,"estimate":true,"why":"Egypt received $36.5B in FY2024/25; the Gulf split is not published, so this is my estimate.","refs":["eg_total_fy25"]},"adoption":{"score":2,"estimate":true,"why":"Not in the Chainalysis top 20; activity constrained by the ban.","refs":[]},"regulation":{"score":1,"estimate":false,"why":"Crypto activity prohibited without a CBE licence (Law 194 of 2020, Art. 206); none disclosed.","refs":["reg_eg"]},"partners":{"score":2,"estimate":true,"why":"Gulf sending presence only.","refs":[]},"economics":{"score":3,"estimate":false,"why":"3.70% from the UAE, 5.15% from Saudi Arabia (average about 4.4%).","refs":["rpw_ae_eg_200","rpw_sa_eg_200"]},"execution":{"score":1,"estimate":true,"why":"Ban plus a recent history of FX shortages.","refs":["reg_eg"]}}},{"id":"gcc_bd","name":"Gulf to Bangladesh","track":"MENA corridors","role":"kept for rigour","scores":{"flow":{"score":4,"estimate":false,"why":"$8.43B from Saudi Arabia and the UAE in FY2024-25 (Bangladesh Bank).","refs":["bd_from_sa_fy25","bd_from_ae_fy25"]},"adoption":{"score":1,"estimate":true,"why":"No licensing route; activity pushed underground.","refs":["reg_bd"]},"regulation":{"score":1,"estimate":false,"why":"No licensing route found; central bank warnings in place.","refs":["reg_bd"]},"partners":{"score":2,"estimate":true,"why":"Gulf sending presence only.","refs":[]},"economics":{"score":5,"estimate":false,"why":"Most expensive in the set: 7.72% from the UAE, 10.20% from Saudi Arabia.","refs":["rpw_ae_bd_200","rpw_sa_bd_200"]},"execution":{"score":1,"estimate":true,"why":"No legal route at the receiving end.","refs":["reg_bd"]}}},{"id":"tr","name":"Türkiye (inbound and local)","track":"MENA corridors","scores":{"flow":{"score":2,"estimate":true,"why":"Inbound remittances are modest; the size is in local crypto trading, which this criterion does not count.","refs":[]},"adoption":{"score":4,"estimate":false,"why":"Ranked 20th in Chainalysis 2026.","refs":["cha26_turkiye"]},"regulation":{"score":3,"estimate":false,"why":"SPK licenses crypto providers; CBRT bans crypto in payments.","refs":["reg_tr"]},"partners":{"score":4,"estimate":true,"why":"Fuze lists a Turkish entity and an Istanbul office.","refs":["fuze_tr_presence"]},"economics":{"score":3,"estimate":false,"why":"Germany to Türkiye 4.01% for $200.","refs":["rpw_de_tr_200"]},"execution":{"score":3,"estimate":true,"why":"Licence process under way across the market; high inflation and lira volatility.","refs":["reg_tr"]}}},{"id":"eu_gulf","name":"Europe institutional to Gulf","track":"European institutional","scores":{"flow":{"score":3,"estimate":true,"why":"Wealth and treasury flows are large but not measured publicly; my estimate.","refs":[]},"adoption":{"score":3,"estimate":true,"why":"Institutional demand is early: Fuze cites about 4 in 5 Swiss banks with no regulated crypto offer.","refs":["ch_banks_no_crypto"]},"regulation":{"score":4,"estimate":false,"why":"MiCA fully in force after 1 Jul 2026; Swiss SRO route already used. EU clients need MiCA authorisation.","refs":["reg_eu","reg_ch"]},"partners":{"score":4,"estimate":false,"why":"Swiss entry in Sep 2026 plus UAE licences at the other end.","refs":["tl_ch","tl_vara"]},"economics":{"score":3,"estimate":true,"why":"Not a retail remittance route; B2B fees are not public. Neutral score.","refs":[]},"execution":{"score":3,"estimate":true,"why":"An EU CASP authorisation is a heavy build, done once.","refs":["reg_eu"]}}},{"id":"us_latam","name":"US to Latin America (Mexico first)","track":"US dollar access","scores":{"flow":{"score":5,"estimate":false,"why":"Mexico received $61.8B in 2025.","refs":["mx_total_2025"]},"adoption":{"score":5,"estimate":false,"why":"Brazil 1st and Mexico 11th in Chainalysis 2026.","refs":["cha26_brazil","cha26_mexico"]},"regulation":{"score":3,"estimate":false,"why":"GENIUS Act and OCC rule give a clear US base; Banxico limits regulated institutions in Mexico.","refs":["reg_us","reg_mx"]},"partners":{"score":3,"estimate":false,"why":"US rails via Modern Treasury; no public Latin American presence.","refs":["tl_us"]},"economics":{"score":3,"estimate":false,"why":"US to Mexico 4.54% for $200.","refs":["rpw_us_mx_200"]},"execution":{"score":2,"estimate":true,"why":"Most crowded stablecoin corridor in the world; new licences at the receiving end; far from Fuze's home base.","refs":[]}}},{"id":"sa_eaf","name":"Saudi Arabia to East Africa","track":"MENA corridors","scores":{"flow":{"score":2,"estimate":true,"why":"Not measured by corridor; likely small relative to South Asia.","refs":[]},"adoption":{"score":3,"estimate":true,"why":"Sub-Saharan Africa led 2026 growth (Chainalysis); Kenya and Ethiopia not in the top 20.","refs":["cha26_nigeria"]},"regulation":{"score":2,"estimate":false,"why":"Kenya VASP Act passed Oct 2025, rules still being set; Saudi route pending.","refs":["reg_ke","reg_sa"]},"partners":{"score":1,"estimate":true,"why":"No visible presence at either end.","refs":[]},"economics":{"score":5,"estimate":false,"why":"Saudi Arabia to Ethiopia 7.85% for $200.","refs":["rpw_sa_et_200"]},"execution":{"score":1,"estimate":false,"why":"Kenya on the FATF grey list (Oct 2026); Ethiopian FX controls.","refs":["reg_fatf"]}}}]}</script>
+<script>
+(function(){
+const D = JSON.parse(document.getElementById('data').textContent);
+const S = JSON.parse(document.getElementById('scores').textContent);
+const P = Object.fromEntries(D.points.map(p=>[p.id,p]));
+const R = Object.fromEntries(D.regulatory.map(r=>[r.id,r]));
+const T = Object.fromEntries(D.fuze_timeline.map(t=>[t.id,t]));
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const host = u=>{try{return new URL(u).hostname.replace(/^www\./,'')}catch(e){return ''}};
+
+/* shapes for tracks and series: colour plus shape */
+const SHAPE = {
+  circle:c=>`<svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="${c}"/></svg>`,
+  square:c=>`<svg width="12" height="12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" fill="${c}"/></svg>`,
+  triangle:c=>`<svg width="12" height="12" aria-hidden="true"><path d="M6 1 11 11H1z" fill="${c}"/></svg>`
+};
+const TRACK = {
+  'MENA':{name:'MENA corridors',shape:'circle',c:'var(--s1)'},
+  'MENA corridors':{name:'MENA corridors',shape:'circle',c:'var(--s1)'},
+  'Europe institutional':{name:'European institutional',shape:'square',c:'var(--s2)'},
+  'European institutional':{name:'European institutional',shape:'square',c:'var(--s2)'},
+  'US dollar access':{name:'US dollar access',shape:'triangle',c:'var(--s3)'}
+};
+const trackTag = k=>{const t=TRACK[k];return `<span class="track">${SHAPE[t.shape](t.c)}${esc(t.name)}</span>`};
+
+/* ---- timeline ---- */
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fmtDate = d=>{ if(!d||d==='n/a') return 'Licensed'; const [y,m]=d.split('-'); return MONTHS[+m-1]+' '+y; };
+const TL_TEXT = {
+  tl_vara:'VARA licence in Dubai, broker dealer.',
+  tl_cbuae:'CBUAE retail payments licence.',
+  tl_pk:'Stated interest in Pakistan inbound remittances. No operations announced.',
+  tl_jazari:'Jazari partnership for MENA remittance.',
+  tl_ch:'Switzerland via SO-FIT, B2B for private banks and wealth managers.',
+  tl_us:'US expansion with Modern Treasury: US accounts and stablecoin conversion.'
+};
+const order = ['tl_cbuae','tl_vara','tl_pk','tl_jazari','tl_ch','tl_us'];
+$('#timeline').innerHTML = order.map(id=>{const t=T[id];return `<li><span class="when">${fmtDate(t.date)}</span><div>${trackTag(t.track)}<div class="what">${esc(TL_TEXT[id]).replace('SO-FIT','<span class="nw">SO-FIT</span>')} <a href="${esc(t.url)}" target="_blank" rel="noopener" aria-label="Source: ${esc(t.source)}">Source</a></div></div></li>`}).join('');
+$('#tracks').innerHTML = [
+  ['MENA','UAE licences, Jazari, Pakistan interest'],
+  ['Europe institutional','Swiss entry for private banks'],
+  ['US dollar access','US accounts and stablecoin rails']
+].map(([k,t])=>`<div class="trackcard"><b>${SHAPE[TRACK[k].shape](TRACK[k].c)}${esc(TRACK[k].name)}</b><span class="muted" style="font-size:14px">${esc(t)}</span></div>`).join('');
+
+/* ---- criteria ---- */
+const W0 = Object.fromEntries(S.criteria.map(c=>[c.id,c.weight]));
+$('#criteria').innerHTML = S.criteria.map((c,i)=>`<li><span class="n">${String(i+1).padStart(2,'0')}/</span><div><h3>${esc(c.name)}</h3><p>${esc(c.definition)}</p></div><span class="w">${c.weight}%</span></li>`).join('');
+
+/* ---- ranking ---- */
+const PRESETS = {
+  'Default': W0,
+  'Equal': {flow:1,adoption:1,regulation:1,partners:1,economics:1,execution:1},
+  'Size first': {flow:35,adoption:15,regulation:15,partners:10,economics:15,execution:10},
+  'Price gap first': {flow:15,adoption:10,regulation:20,partners:10,economics:35,execution:10},
+  'Regulation first': {flow:15,adoption:10,regulation:40,partners:15,economics:10,execution:10}
+};
+let W = {...W0};
+const SHORT = {flow:'Flow',adoption:'Demand',regulation:'Regulation',partners:'Partners',economics:'Economics',execution:'Execution'};
+$('#presets').innerHTML = Object.keys(PRESETS).map(k=>`<button type="button" class="btn ghost small" data-preset="${esc(k)}" aria-pressed="${k==='Default'}">${esc(k)}</button>`).join('');
+$('#sliders').innerHTML = S.criteria.map(c=>`<div class="wrow"><label for="w_${c.id}"><span>${esc(c.name)}</span><output id="o_${c.id}" for="w_${c.id}"></output></label><input type="range" id="w_${c.id}" min="0" max="40" step="1" value="${c.weight}"></div>`).join('');
+
+const refLinks = refs=>{
+  const seen=new Set(); const out=[];
+  refs.forEach(r=>{const o=P[r]||R[r]||T[r]; if(!o||!o.url||seen.has(o.url)) return; seen.add(o.url); out.push(`<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(host(o.url))}</a>`)});
+  return out.length?`<span class="srcs subtle">Source: ${out.join(', ')}</span>`:`<span class="srcs subtle">Source: my judgement</span>`;
+};
+const dots = n=>`<span class="dots" aria-hidden="true">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</span>`;
+const list = $('#ranklist');
+list.innerHTML = S.candidates.map(c=>`<li data-id="${c.id}"><button class="rowbtn" aria-expanded="false" aria-controls="d_${c.id}"><span class="rk"></span><span><span class="nm">${esc(c.name)}</span><span class="tr">${esc(TRACK[c.track].name)}</span><span class="bar"><i></i></span></span><span class="sc num"></span></button><div class="detail" id="d_${c.id}"><table><thead><tr><th scope="col">Criterion</th><th scope="col">Score and reason</th></tr></thead><tbody>${S.criteria.map(k=>{const s=c.scores[k.id];return `<tr><td>${esc(SHORT[k.id])}</td><td>${dots(s.score)} <b class="num">${s.score}</b>${s.estimate?'<span class="est" title="My estimate">EST</span>':''}<br>${esc(s.why)}${refLinks(s.refs)}</td></tr>`}).join('')}</tbody></table></div></li>`).join('');
+list.addEventListener('click',e=>{const b=e.target.closest('.rowbtn'); if(!b) return; const li=b.parentElement; const open=li.classList.toggle('open'); b.setAttribute('aria-expanded',open)});
+
+const total = (c,w)=>{let t=0,sw=0; for(const k in w){t+=c.scores[k].score*w[k]; sw+=w[k]} return sw?t/sw:0};
+let annT;
+function rerank(announce){
+  const sw = Object.values(W).reduce((a,b)=>a+b,0)||1;
+  S.criteria.forEach(c=>{$('#o_'+c.id).textContent=Math.round(W[c.id]/sw*100)+'%'; const r=$('#w_'+c.id); r.value=W[c.id]; r.setAttribute('aria-valuetext',Math.round(W[c.id]/sw*100)+' percent')});
+  const ranked = S.candidates.map(c=>({c,t:total(c,W)})).sort((a,b)=>b.t-a.t||b.c.scores.regulation.score-a.c.scores.regulation.score);
+  const items=[...list.children]; const first=new Map(items.map(li=>[li,li.getBoundingClientRect().top]));
+  ranked.forEach((r,i)=>{const li=list.querySelector(`[data-id="${r.c.id}"]`); list.appendChild(li); li.classList.toggle('top',i<3); $('.rk',li).textContent=String(i+1).padStart(2,'0'); $('.sc',li).textContent=r.t.toFixed(2); $('.bar i',li).style.width=(r.t/5*100)+'%'; $('.rowbtn',li).setAttribute('aria-label',`Rank ${i+1}, ${r.c.name}, score ${r.t.toFixed(2)} out of 5. Show details`)});
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    items.forEach(li=>{const d=first.get(li)-li.getBoundingClientRect().top; if(d){li.style.transition='none'; li.style.transform=`translateY(${d}px)`; requestAnimationFrame(()=>{li.style.transition=''; li.style.transform=''})}});
+  }
+  $('#printMatrix').innerHTML = `<table class="pm"><caption class="label" style="text-align:left;padding-bottom:6px">Scores at default weights. * = my estimate</caption><thead><tr><th>#</th><th>Option</th>${S.criteria.map(k=>`<th>${esc(SHORT[k.id])}</th>`).join('')}<th>Score</th></tr></thead><tbody>${ranked.map((r,i)=>`<tr class="${i<3?'top':''}"><td>${i+1}</td><td>${esc(r.c.name)}</td>${S.criteria.map(k=>{const s=r.c.scores[k.id];return `<td>${s.score}${s.estimate?'*':''}</td>`}).join('')}<td>${r.t.toFixed(2)}</td></tr>`).join('')}</tbody></table>`;
+  if(announce){clearTimeout(annT); annT=setTimeout(()=>{$('#rankAnnounce').textContent='Top three: '+ranked.slice(0,3).map(r=>r.c.name).join(', ')},400)}
+}
+$('#sliders').addEventListener('input',e=>{const id=e.target.id.replace('w_',''); W[id]=+e.target.value; document.querySelectorAll('[data-preset]').forEach(b=>b.setAttribute('aria-pressed','false')); rerank(true)});
+$('#presets').addEventListener('click',e=>{const b=e.target.closest('[data-preset]'); if(!b) return; const p=PRESETS[b.dataset.preset]; const sw=Object.values(p).reduce((a,c)=>a+c,0); W=Object.fromEntries(Object.entries(p).map(([k,v])=>[k,Math.round(v/sw*100)])); document.querySelectorAll('[data-preset]').forEach(x=>x.setAttribute('aria-pressed',x===b)); rerank(true)});
+rerank(false);
+
+/* ---- economics ---- */
+const CORR = [
+  {id:'gcc_pk',name:'Gulf to Pakistan',flow:'pk_from_gulf_fy25',cost:'rpw_gulf_pk_wavg'},
+  {id:'ae_pk',name:'UAE to Pakistan',flow:'pk_from_ae_fy25',cost:'rpw_ae_pk_200'},
+  {id:'sa_pk',name:'Saudi Arabia to Pakistan',flow:'pk_from_sa_fy25',cost:'rpw_sa_pk_200'},
+  {id:'us_mx',name:'US to Mexico (all Mexico inflows)',flow:'mx_total_2025',cost:'rpw_us_mx_200'}
+];
+const DEF = {share:P.econ_share_captured.value, tl:P.econ_take_rate_low.value, th:P.econ_take_rate_high.value};
+$('#eCorr').innerHTML = CORR.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
+const fmtM = v=> v>=1000 ? '$'+(v/1000).toFixed(2)+'B' : '$'+(v>=100?v.toFixed(0):v.toFixed(1))+'M';
+function setCorr(id){const c=CORR.find(x=>x.id===id); const f=P[c.flow], k=P[c.cost]; $('#eFlow').value=(+f.value).toFixed(f.value<10?2:1).replace(/\.?0+$/,''); $('#eInc').value=k.value; $('#eFlowSrc').textContent=f.period;}
+function reset(){ $('#eCorr').value='gcc_pk'; setCorr('gcc_pk'); $('#eShare').value=DEF.share; $('#eTL').value=DEF.tl; $('#eTH').value=DEF.th; calc(); }
+function calc(){
+  const flow=+$('#eFlow').value||0, inc=+$('#eInc').value||0, share=+$('#eShare').value, tl=+$('#eTL').value||0, th=+$('#eTH').value||0;
+  const lo=Math.min(tl,th), hi=Math.max(tl,th);
+  $('#eShareOut').textContent=share.toFixed(1)+'%';
+  const vol=flow*1000*share/100; // $M
+  $('#oVol').textContent=fmtM(vol)+' / yr';
+  $('#oRev').textContent=fmtM(vol*lo/100)+' to '+fmtM(vol*hi/100);
+  const head=inc-hi;
+  $('#oHead').textContent=(head>=0?'':'−')+Math.abs(head).toFixed(2)+' pts';
+  $('#econNote').textContent = `Price headroom is the incumbent cost (${inc.toFixed(2)}%) minus the high take rate (${hi.toFixed(2)}%). It is before partner and FX costs, which this example does not model. ${head<1?'Headroom is thin. The case here is speed and settlement, not price.':head<3?'Some room on price, which partner and FX costs will narrow.':'Clear room to undercut incumbents on price.'}`;
+  drawChart(flow,lo,hi,share);
+}
+function drawChart(flow,lo,hi,share){
+  const svg=$('#eChart'), Wd=Math.max(300,Math.round(svg.parentElement.clientWidth||560)), H=Wd<480?260:300, m={l:56,r:16,t:16,b:40};
+  svg.setAttribute('viewBox',`0 0 ${Wd} ${H}`);
+  const xs=[]; for(let s=0.5;s<=10.001;s+=0.5) xs.push(+s.toFixed(1));
+  const rev=(s,t)=>flow*1000*s/100*t/100;
+  const ymax=Math.max(rev(10,hi),0.001)*1.08;
+  const x=s=>m.l+(s-0.5)/(9.5)*(Wd-m.l-m.r), y=v=>H-m.b-(v/ymax)*(H-m.t-m.b);
+  const ticksY=4, gy=[...Array(ticksY+1)].map((_,i)=>ymax/ticksY*i);
+  let g='';
+  gy.forEach(v=>{g+=`<line x1="${m.l}" x2="${Wd-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--border)"/><text x="${m.l-8}" y="${y(v)+4}" text-anchor="end">${fmtM(v)}</text>`});
+  (Wd<480?[0.5,5,10]:[0.5,2,4,6,8,10]).forEach(s=>{g+=`<text x="${x(s)}" y="${H-m.b+18}" text-anchor="middle">${s}%</text>`});
+  g+=`<text x="${(Wd+m.l)/2}" y="${H-6}" text-anchor="middle">Share of corridor on stablecoin rails</text>`;
+  const line=(t,col)=>`<polyline fill="none" stroke="${col}" stroke-width="2.5" points="${xs.map(s=>x(s)+','+y(rev(s,t))).join(' ')}"/>`;
+  g+=line(hi,'var(--s1)')+line(lo,'var(--s2)');
+  [1,2,4,6,8,10].forEach(s=>{g+=`<circle cx="${x(s)}" cy="${y(rev(s,hi))}" r="4.5" fill="var(--s1)"/><rect x="${x(s)-4}" y="${y(rev(s,lo))-4}" width="8" height="8" fill="var(--s2)"/>`});
+  g+=`<line x1="${x(share)}" x2="${x(share)}" y1="${m.t}" y2="${H-m.b}" stroke="var(--muted)" stroke-dasharray="4 4"/>`;
+  g+=`<text x="${Math.min(x(share)+6,Wd-120)}" y="${m.t+12}" fill="var(--muted)" style="fill:var(--muted)">${fmtM(rev(share,lo))} to ${fmtM(rev(share,hi))}</text>`;
+  svg.innerHTML=g;
+  $('#chartDesc').textContent=`Line chart of illustrative annual Fuze revenue against the share of the corridor on stablecoin rails, from 0.5% to 10%. At the current share of ${share}%, revenue is ${fmtM(rev(share,lo))} to ${fmtM(rev(share,hi))} a year.`;
+}
+$('#eCorr').addEventListener('change',e=>{setCorr(e.target.value); calc()});
+['eFlow','eInc','eShare','eTL','eTH'].forEach(id=>$('#'+id).addEventListener('input',calc));
+$('#eReset').addEventListener('click',reset);
+reset();
+let rzT, lastW=window.innerWidth; window.addEventListener('resize',()=>{if(window.innerWidth===lastW) return; lastW=window.innerWidth; clearTimeout(rzT); rzT=setTimeout(calc,150)});
+if(matchMedia('(min-width:760px)').matches) $('#fine').open=true;
+
+/* ---- sources ---- */
+const src=new Map();
+const add=o=>{ if(!o.url) return; const k=o.url; if(!src.has(k)) src.set(k,{name:o.source,url:o.url,date:o.retrieved,type:o.source_type||o.verified||''}); };
+D.fuze_timeline.forEach(add); D.points.forEach(add); D.regulatory.forEach(add);
+const all_=[...src.values()];
+const rpw=all_.filter(s=>/remittanceprices\.worldbank\.org\/corridor\//.test(s.url));
+const rows=all_.filter(s=>!rpw.includes(s)).sort((a,b)=>a.name.localeCompare(b.name));
+$('#srcCount').textContent='('+all_.length+')';
+const rpwLi = rpw.length ? `<li>World Bank RPW corridor pages, Q3 2025 (${rpw.length})<br>${rpw.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(decodeURI(s.url.split('/corridor/')[1]).replace('/',' to ').replace(/-/g,' '))}</a>`).join(', ')} <span class="d">base remittanceprices.worldbank.org/corridor/, retrieved ${esc(rpw[0].date)}</span></li>` : '';
+$('#srclist').innerHTML=rpwLi+rows.map(s=>`<li>${esc(s.name)}${/secondary/.test(s.type)?' <span class="subtle">(press report of an official figure)</span>':''}<br><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url)}</a> <span class="d">retrieved ${esc(s.date)}</span></li>`).join('');
+const est=S.candidates.reduce((a,c)=>a+Object.values(c.scores).filter(s=>s.estimate).length,0), all=S.candidates.length*S.criteria.length;
+$('#estCount').textContent=`${est} of ${all} scores rest on my judgement and are marked EST. The rest follow directly from a sourced figure or rule.`;
+})();
+</script>
+</body>
+</html>
